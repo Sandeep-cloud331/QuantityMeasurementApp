@@ -6,26 +6,25 @@ public class Length {
     private final double value;
     private final LengthUnit unit;
 
-    public static enum LengthUnit {
-        FEET(12.0),
-        INCH(1.0);
+    public enum LengthUnit {
+        FEET(1.0),
+        INCH(1.0/12),
+        YARDS(3.0),
+        CENTIMETER(0.393701);
 
-        private final double conversionFactor;
+        private final double convertToFeet;
 
-        LengthUnit(double conversionFactor){
-            this.conversionFactor = conversionFactor;
+        LengthUnit(double convertToFeet){
+            this.convertToFeet = convertToFeet;
         }
 
         public double convertToBase(double value){
-            return value * conversionFactor;
+            return value * convertToFeet;
         }
-
-        public double getConversionFactor(){ return conversionFactor; }
-
     }
 
     public Length(double value, LengthUnit unit){
-        if(unit == null) throw new IllegalArgumentException("Unit cannot be null!");
+        if (unit == null) throw new IllegalArgumentException("Unit cannot be null");
         this.value = value;
         this.unit = unit;
     }
@@ -47,8 +46,4 @@ public class Length {
     public int hashCode(){
         return Objects.hash(toBaseValue());
     }
-
-    public double getValue(){ return value; }
-    public LengthUnit getUnit(){ return unit; }
 }
-
