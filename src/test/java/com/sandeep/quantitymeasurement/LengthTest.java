@@ -4,61 +4,65 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LengthTest {
-    @Test
-    void testEquality_FeetToFeet_SameValue(){
-        Length q1 = new Length(1.0, Length.LengthUnit.FEET);
-        Length q2 = new Length(1.0, Length.LengthUnit.FEET);
+    private static final double EPSILON = 1e-6;
 
-        assertTrue(q1.equals(q2));
+   @Test
+    void testConversion_FeetToInches(){
+        assertEquals(12.0, Length.convert(1.0, Length.LengthUnit.FEET, Length.LengthUnit.INCH), EPSILON);
     }
-    
-    @Test
-    void testEquality_InchToInch_SameValue(){
-        Length q1 = new Length(1.0, Length.LengthUnit.INCH);
-        Length q2 = new Length(1.0, Length.LengthUnit.INCH);
 
-        assertTrue(q1.equals(q2));
+   @Test
+    void testConversion_InchesToFeet(){
+        assertEquals(2.0, Length.convert(24.0, Length.LengthUnit.INCH, Length.LengthUnit.FEET), EPSILON);
     }
 
     @Test
-    void testEquality_NullComparison(){
-        Length q1 = new Length(1.0, Length.LengthUnit.FEET);
-        assertFalse(q1.equals(null));
+    void testConversion_YardsToInches(){
+        assertEquals(36.0, Length.convert(1.0, Length.LengthUnit.YARDS, Length.LengthUnit.INCH), EPSILON);
     }
 
     @Test
-    void testEquality_InchToFeet_EquivalentValue(){
-        Length q1 = new Length(1.0, Length.LengthUnit.FEET);
-        Length q2 = new Length(12.0, Length.LengthUnit.INCH);
-
-        assertTrue(q1.equals(q2));
+    void testConversion_InchesToYards(){
+        assertEquals(2.0, Length.convert(72.0, Length.LengthUnit.INCH, Length.LengthUnit.YARDS), EPSILON);
     }
 
     @Test
-    void testEquality_FeetToFeet_DifferentValue(){
-        Length q1 = new Length(1.0, Length.LengthUnit.FEET);
-        Length q2 = new Length(2.0, Length.LengthUnit.FEET);
-
-        assertFalse(q1.equals(q2));
+    void testConversion_CentimetersToInches(){
+        assertEquals(1.0, Length.convert(2.54, Length.LengthUnit.CENTIMETER, Length.LengthUnit.INCH), EPSILON);
     }
 
     @Test
-    void testEquality_InchToInch_DifferentValue(){
-        Length q1 = new Length(1.0, Length.LengthUnit.INCH);
-        Length q2 = new Length(2.0, Length.LengthUnit.INCH);
-
-        assertFalse(q1.equals(q2));
+    void testConversion_FeetToYards(){
+        assertEquals(2.0, Length.convert(6.0, Length.LengthUnit.FEET, Length.LengthUnit.YARDS), EPSILON);
     }
 
     @Test
-    void testEquality_InvalidUnit(){
-        assertThrows(IllegalArgumentException.class, () -> new Length(5.0, null));
+    void testConversion_RoundTrip_PreservesValue(){
+        double temp = 5.5;
+
+        double inches = Length.convert(temp, Length.LengthUnit.FEET, Length.LengthUnit.INCH);
+        double back = Length.convert(inches, Length.LengthUnit.INCH, Length.LengthUnit.FEET);
+        assertEquals(temp, back, EPSILON);
     }
 
     @Test
-    void testEquality_SameReference(){
-        Length q1 = new Length(1, Length.LengthUnit.FEET);
-        assertTrue(q1.equals(q1));
+    void testConversion_ZeroValue(){
+        assertEquals(0.0, Length.convert(0.0, Length.LengthUnit.FEET, Length.LengthUnit.INCH), EPSILON);
     }
 
+    @Test
+    void testConversion_NegativeValue(){
+        assertEquals(-12.0, Length.convert(-1.0, Length.LengthUnit.FEET, Length.LengthUnit.INCH), EPSILON);
+    }
+
+    @Test
+    void testConversion_InvalidUnit_Throws(){
+       assertThrows(IllegalArgumentException.class, () -> Length.convert(1.0, null, Length.LengthUnit.FEET));
+    }
+
+    @Test
+    void testConversion_NaNOrInfinite_Throws() {
+        assertThrows(IllegalArgumentException.class, () -> Length.convert(Double.NaN, Length.LengthUnit.FEET, Length.LengthUnit.INCH));
+        assertThrows(IllegalArgumentException.class, () -> Length.convert(Double.POSITIVE_INFINITY, Length.LengthUnit.FEET, Length.LengthUnit.INCH));
+    }
 }
