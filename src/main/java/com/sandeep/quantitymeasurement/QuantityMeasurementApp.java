@@ -1,16 +1,23 @@
 package com.sandeep.quantitymeasurement;
 
 public class QuantityMeasurementApp {
+
     public static void main(String[] args) {
-        Length feet = new Length(1.0, LengthUnit.FEET);
-        Length inch = new Length(12.0, LengthUnit.INCH);
 
-        System.out.println("UC6 result (default LengthUnit): " + feet.add(inch));
+        Quantity<LengthUnit> l1 = new Quantity<>(1, LengthUnit.FEET);
+        Quantity<LengthUnit> l2 = new Quantity<>(12, LengthUnit.INCH);
 
-        System.out.println("Target FEET: " + Length.add(feet, inch, LengthUnit.FEET));
-        System.out.println("Target INCH: " + Length.add(feet, inch, LengthUnit.INCH));
-        System.out.println("Target YARDS: " + Length.add(feet, inch, LengthUnit.YARDS));
-        System.out.println("Target CM: " + Length.add(feet, inch, LengthUnit.CENTIMETER));
+        System.out.println("Length equal? " + l1.equals(l2));
 
+        Quantity<WeightUnit> w1 = new Quantity<>(1, WeightUnit.KILOGRAM);
+        Quantity<WeightUnit> w2 = new Quantity<>(1000, WeightUnit.GRAM);
+
+        System.out.println("Weight equal? " + w1.equals(w2));
+
+        System.out.println("Convert 1 foot to inches: " + l1.convertTo(LengthUnit.INCH));
+
+        System.out.println("Add lengths: " + l1.add(l2));
+
+        System.out.println("Add weights in grams: " + w1.add(w2, WeightUnit.GRAM));
     }
 }
