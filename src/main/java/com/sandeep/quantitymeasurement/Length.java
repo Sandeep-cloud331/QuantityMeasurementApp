@@ -5,43 +5,29 @@ import java.util.Objects;
 public class Length {
     private final double value;
     private final LengthUnit unit;
+
     private static final double EPSILON = 0.001;
-
-    public enum LengthUnit {
-        FEET(1.0),
-        INCH(1.0/12),
-        YARDS(3.0),
-        CENTIMETER(0.03280839895);
-
-        private final double convertToFeet;
-
-        LengthUnit(double convertToFeet){
-            this.convertToFeet = convertToFeet;
-        }
-
-        public double toFeet(double value){
-            return value * convertToFeet;
-        }
-
-        public double fromFeet(double value){
-            return value/convertToFeet;
-        }
-
-        public double getFeetFactor(){ return convertToFeet; }
-
-    }
-
 
     public Length(double value, LengthUnit unit){
         if(unit == null) throw new IllegalArgumentException("Unit cannot be null");
-
         if(!Double.isFinite(value)) throw new IllegalArgumentException("Invalid number");
+
         this.value = value;
         this.unit = unit;
     }
 
     private double toBaseValue(){
         return unit.toFeet(value);
+    }
+
+     public Length convertTo(LengthUnit targetUnit) {
+
+        double base = this.toBaseValue();
+        double converted = targetUnit.fromFeet(base);
+
+        double rounded = Math.round(converted * 1000.0) / 1000.0;
+
+        return new Length(rounded, targetUnit);
     }
 
     public Length add(Length q){
