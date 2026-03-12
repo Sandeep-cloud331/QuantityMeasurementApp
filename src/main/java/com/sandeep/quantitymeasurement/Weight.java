@@ -3,6 +3,7 @@ package com.sandeep.quantitymeasurement;
 import java.util.Objects;
 
 public class Weight {
+
     private final double value;
     private final WeightUnit unit;
 
@@ -17,7 +18,7 @@ public class Weight {
     }
 
     public double toBaseValue(){
-        return unit.convertToKg(value);
+        return unit.convertToBase(value);
     }
 
     @Override
@@ -39,7 +40,7 @@ public class Weight {
         if(targetUnit == null) throw new IllegalArgumentException("Target unit cannot be null");
 
         double base = this.toBaseValue();
-        double converted = targetUnit.convertFromKg(base);
+        double converted = targetUnit.convertFromBase(base);
 
         double rounded = Math.round(converted * 1000.0) / 1000.0;
 
@@ -56,7 +57,7 @@ public class Weight {
 
         double sumKg = w1.toBaseValue() + w2.toBaseValue();
 
-        double converted = targetUnit.convertToKg(sumKg);
+        double converted = targetUnit.convertFromBase(sumKg);
         double rounded = Math.round(converted * 1000.0) / 1000.0;
 
         return new Weight(rounded, targetUnit);
@@ -67,5 +68,3 @@ public class Weight {
         return String.format("%.3f %s", value, unit);
     }
 }
-
-

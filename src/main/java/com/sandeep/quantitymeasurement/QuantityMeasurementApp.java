@@ -1,5 +1,4 @@
 package com.sandeep.quantitymeasurement;
-
 public class QuantityMeasurementApp {
 
     public static void main(String[] args) {
@@ -30,5 +29,10 @@ public class QuantityMeasurementApp {
         System.out.println(v1.convertTo(VolumeUnit.GALLON));
         System.out.println(v2.add(v3));
         System.out.println(v3.add(v4, VolumeUnit.GALLON));
+
+        System.out.println("Subtract: " + l1.subtract(l2));
+        System.out.println("Subtract in inches: " + l1.subtract(l2, LengthUnit.INCH));
+
+        System.out.println("Division ratio: " + w1.divide(w2));
     }
 }
