@@ -1,5 +1,4 @@
 package com.sandeep.quantitymeasurement;
-
 import java.util.Objects;
 
 public class Quantity<U extends IMeasurable> {
@@ -48,7 +47,8 @@ public class Quantity<U extends IMeasurable> {
 
     private double operations(Quantity<U> other, ArithmeticOperation op){
         if(other == null) throw new IllegalArgumentException("Other quantity cannot be null");
-        //if(!this.unit.getClass().equals(other.unit.getClass())) throw new IllegalArgumentException("Incompatible measurement category");
+        this.unit.validOperationSupport(op.name());
+        if(!this.unit.getClass().equals(other.unit.getClass())) throw new IllegalArgumentException("Incompatible measurement category");
 
         double base1 = this.toBaseValue();
         double base2 = other.toBaseValue();
