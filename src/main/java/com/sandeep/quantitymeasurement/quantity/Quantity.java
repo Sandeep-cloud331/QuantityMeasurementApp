@@ -1,4 +1,5 @@
-package com.sandeep.quantitymeasurement;
+package com.sandeep.quantitymeasurement.quantity;
+import com.sandeep.quantitymeasurement.measurable.IMeasurable;
 import java.util.Objects;
 
 public class Quantity<U extends IMeasurable> {

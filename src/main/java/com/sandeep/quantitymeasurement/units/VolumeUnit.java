@@ -1,23 +1,29 @@
-package com.sandeep.quantitymeasurement;
-public enum VolumeUnit implements IMeasurable{
+package com.sandeep.quantitymeasurement.units;
+
+import com.sandeep.quantitymeasurement.measurable.IMeasurable;
+import com.sandeep.quantitymeasurement.support.SupportsArithmetic;
+
+public enum VolumeUnit implements IMeasurable {
+
     LITRE(1.0),
     MILLILITRE(0.001),
     GALLON(3.78541);
 
     private final double conversionFactor;
+
     private static final SupportsArithmetic sm = () -> true;
 
-    VolumeUnit(double conversionFactor){
+    VolumeUnit(double conversionFactor) {
         this.conversionFactor = conversionFactor;
     }
 
     @Override
-    public double convertToBase(double value){
+    public double convertToBase(double value) {
         return value * conversionFactor;
     }
 
     @Override
-    public double convertFromBase(double value){
+    public double convertFromBase(double value) {
         return value / conversionFactor;
     }
 
@@ -27,8 +33,7 @@ public enum VolumeUnit implements IMeasurable{
     }
 
     @Override
-    public String getUnitName(){
+    public String getUnitName() {
         return this.name();
     }
-
 }
