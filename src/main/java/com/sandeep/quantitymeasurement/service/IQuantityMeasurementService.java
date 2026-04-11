@@ -1,17 +1,20 @@
 package com.sandeep.quantitymeasurement.service;
 
-import com.sandeep.quantitymeasurement.model.QuantityMeasurementEntity;
-import com.sandeep.quantitymeasurement.quantity.Quantity;
+import com.sandeep.quantitymeasurement.model.*;
+
+import java.util.List;
 
 public interface IQuantityMeasurementService {
+	
+	QuantityMeasurementDTO compareQuantities(QuantityDTO thisQty, QuantityDTO thatQty);
+    QuantityMeasurementDTO convertQuantity(QuantityDTO thisQty, QuantityDTO thatQty);
+    QuantityMeasurementDTO addQuantities(QuantityDTO thisQty, QuantityDTO thatQty);
+    QuantityMeasurementDTO subtractQuantities(QuantityDTO thisQty, QuantityDTO thatQty);
+    QuantityMeasurementDTO divideQuantities(QuantityDTO thisQty, QuantityDTO thatQty);
 
-    QuantityMeasurementEntity compare(Quantity<?> q1, Quantity<?> q2);
-
-    QuantityMeasurementEntity convert(Quantity<?> quantity, Object targetUnit);
-
-    QuantityMeasurementEntity add(Quantity<?> q1, Quantity<?> q2);
-
-    QuantityMeasurementEntity subtract(Quantity<?> q1, Quantity<?> q2);
-
-    QuantityMeasurementEntity divide(Quantity<?> q1, Quantity<?> q2);
+    List<QuantityMeasurementDTO> getHistoryByOperation(String operation);
+    List<QuantityMeasurementDTO> getHistoryByType(String measurementType);
+    List<QuantityMeasurementDTO> getErrorHistory();
+    long getOperationCount(String operation);
+	
 }
