@@ -1,6 +1,5 @@
 package com.sandeep.quantitymeasurement;
 
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -11,4 +10,4 @@ public class QuantityMeasurementApp {
         
         SpringApplication.run(QuantityMeasurementApp.class, args);
     }
-}
+}	
