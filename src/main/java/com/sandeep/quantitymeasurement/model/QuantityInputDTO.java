@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class QuantityInputDTO {
 	
-	
-
 	@NotNull(message="First quantity (thisQuantityDTO) must not be null")
 	@Valid
 	private QuantityDTO thisQuantityDTO;

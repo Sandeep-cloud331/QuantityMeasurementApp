@@ -208,4 +208,9 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
                 + a.getMeasurementType() + " and " + b.getMeasurementType());
         }
     }
+
+    @Override
+    public List<QuantityMeasurementDTO> getAllHistory() {
+        return QuantityMeasurementDTO.fromEntityList(repository.findAll());
+    }
 }

@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 
@@ -94,6 +93,15 @@ public class QuantityMeasurementController {
         QuantityMeasurementDTO result = service.divideQuantities(
             input.getThisQuantityDTO(), input.getThatQuantityDTO());
         return ResponseEntity.ok(result);
+    }
+    
+    @GetMapping("/history")
+    @Operation(summary = "Get complete measurement history")
+    public ResponseEntity<List<QuantityMeasurementDTO>> getAllHistory() {
+
+        logger.info("GET /history");
+
+        return ResponseEntity.ok(service.getAllHistory());
     }
 
     @GetMapping("/history/operation/{operation}")
