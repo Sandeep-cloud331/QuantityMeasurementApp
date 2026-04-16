@@ -1,71 +1,71 @@
 package com.sandeep.quantitymeasurement.model;
 
-public final class QuantityMeasurementEntity {
-    private final String operation;
-    private final String operand1;
-    private final String operand2;
-    private final String result;
-    private final String error;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(
+    name="quantity_measurement_entity",
+    indexes= {
+        @Index(name="idx_operation", columnList="operation"),
+        @Index(name="idx_meas_type", columnList="thisMeasurementType"),
+        @Index(name="idx_created_at", columnList="createdAt"),
+        @Index(name="idx_is_error", columnList="error") // updated
+    })
+public class QuantityMeasurementEntity {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
 
-    public QuantityMeasurementEntity(String operation, String operand1, String result) {
-        this.operation = operation;
-        this.operand1 = operand1;
-        this.operand2 = null;
-        this.result = result;
-        this.error = null;
+    @Column(nullable=false)
+    private Double thisValue;
+
+    @Column(nullable=false)
+    private String thisUnit;
+
+    @Column(nullable=false)
+    private String thisMeasurementType;
+
+    @Column(nullable=false)
+    private Double thatValue;
+
+    @Column(nullable=false)
+    private String thatUnit;
+
+    @Column(nullable=false)
+    private String thatMeasurementType;
+
+    @Column(nullable=false)
+    private String operation;
+
+    private Double resultValue;
+    private String resultUnit;
+    private String resultMeasurementType;
+    private String resultString;
+
+    private String errorMessage;
+    private boolean error = false; // renamed
+
+    @Column(updatable=false)
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
-    public QuantityMeasurementEntity(String operation, String operand1, String operand2, String result) {
-        this.operation = operation;
-        this.operand1 = operand1;
-        this.operand2 = operand2;
-        this.result = result;
-        this.error = null;
-    }
-
-    public QuantityMeasurementEntity(String errorMessage) {
-        this.operation = null;
-        this.operand1 = null;
-        this.operand2 = null;
-        this.result = null;
-        this.error = errorMessage;
-    }
-
-    public boolean hasError() {
-        return error != null;
-    }
-
-    public String getOperation() {
-        return operation;
-    }
-
-    public String getOperand1() {
-        return operand1;
-    }
-
-    public String getOperand2() {
-        return operand2;
-    }
-
-    public String getResult() {
-        return result;
-    }
-
-    public String getError() {
-        return error;
-    }
-
-    @Override
-    public String toString() {
-        if (hasError()) {
-            return "ERROR: " + error;
-        }
-
-        if (operand2 == null) {
-            return operation + " (" + operand1 + ") = " + result;
-        }
-
-        return operation + " (" + operand1 + ", " + operand2 + ") = " + result;
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 }
+
