@@ -4,6 +4,8 @@ import com.sandeep.quantitymeasurement.security.JwtAuthenticationFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -41,7 +43,10 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
-        config.addAllowedOrigin("http://localhost:5173"); // frontend
+        config.setAllowedOrigins(List.of(
+        	    "http://localhost:5173",
+        	    "https://quantity-measurement-app-frontend-3fe5d1jcx.vercel.app"
+        	)); // frontend
         config.addAllowedMethod("*");
         config.addAllowedHeader("*");
         config.setAllowCredentials(true);
