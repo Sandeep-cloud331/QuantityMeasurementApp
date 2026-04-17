@@ -4,8 +4,11 @@ import com.sandeep.quantitymeasurement.security.JwtAuthenticationFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -37,13 +40,18 @@ public class SecurityConfig {
         "/actuator/**"
     };
 
+    // ✅ CORS CONFIG (FIXED)
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
-        config.addAllowedOrigin("http://localhost:5173"); // frontend
-        config.addAllowedMethod("*");
-        config.addAllowedHeader("*");
+        config.setAllowedOrigins(List.of(
+            "http://localhost:5173",
+            "https://quantity-measurement-app-frontend-3fe5dljcx.vercel.app" // ✅ FIXED URL
+        ));
+
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // ✅ important
+        config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -53,26 +61,27 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http)
-            throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-            // 🔥 FIX 1: CORS enabled properly
+            // ✅ Enable CORS
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
-            // 🔥 FIX 2: disable CSRF for APIs
+            // ✅ Disable CSRF (for APIs)
             .csrf(AbstractHttpConfigurer::disable)
 
+            // ✅ Allow preflight requests WITHOUT auth (VERY IMPORTANT)
             .authorizeHttpRequests(auth -> auth
+            	.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers(PUBLIC_URLS).permitAll()
                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
 
-            // 🔥 JWT filter
+            // ✅ JWT filter
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 
-            // 🔥 Exception handling
+            // ✅ Exception handling
             .exceptionHandling(ex -> ex
                 .authenticationEntryPoint((request, response, authException) -> {
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -85,15 +94,15 @@ public class SecurityConfig {
                 })
             )
 
-            // H2 console support
+            // ✅ H2 console fix
             .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()))
 
-            // Stateless session (JWT)
+            // ✅ Stateless session (JWT)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
             .authenticationProvider(authenticationProvider)
 
-            // OAuth2 login (optional)
+            // ✅ OAuth2 (optional)
             .oauth2Login(oauth2 -> oauth2
                 .loginPage("/auth/login")
                 .defaultSuccessUrl("/api/v1/quantities/history/operation/compare", true)
