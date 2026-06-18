@@ -45,9 +45,9 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOrigins(List.of(
-            "http://localhost:5173",
-                "https://*.vercel.app" // ✅ FIXED URL
+        config.setAllowedOriginPatterns(List.of(
+                "http://localhost:5173",
+                "https://*.vercel.app"
         ));
 
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // ✅ important
