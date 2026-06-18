@@ -47,7 +47,7 @@ public class SecurityConfig {
 
         config.setAllowedOrigins(List.of(
             "http://localhost:5173",
-            "https://quantity-measurement-app-frontend-3fe5dljcx.vercel.app" // ✅ FIXED URL
+                "https://*.vercel.app" // ✅ FIXED URL
         ));
 
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // ✅ important
