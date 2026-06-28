@@ -8,10 +8,10 @@ A production-ready REST API for performing unit conversions, comparisons, and ar
 
 | Service | URL |
 |---------|-----|
-| **Frontend App** | [https://quantity-measurement-app.vercel.app](https://quantity-measurement-app.vercel.app) |
-| **API Base URL** | [https://quantity-measurement-api.onrender.com/api/v1](https://quantity-measurement-api.onrender.com/api/v1) |
-| **Swagger UI** | [https://quantity-measurement-api.onrender.com/swagger-ui.html](https://quantity-measurement-api.onrender.com/swagger-ui.html) |
-| **Health Check** | [https://quantity-measurement-api.onrender.com/actuator/health](https://quantity-measurement-api.onrender.com/actuator/health) |
+| **Frontend App** | [https://quantity-measurement-app.vercel.app](https://quantity-measurement-app-frontend-one-jet.vercel.app/) |
+| **API Base URL** | [https://quantity-measurement-api.onrender.com/api/v1](https://quantitymeasurementapp-2-i500.onrender.com/api/v1) |
+| **Swagger UI** | [https://quantity-measurement-api.onrender.com/swagger-ui.html](https://quantitymeasurementapp-2-i500.onrender.com/swagger-ui/index.html) |
+| **Health Check** | [https://quantity-measurement-api.onrender.com/actuator/health](https://quantitymeasurementapp-2-i500.onrender.com/actuator/health) |
 
 > Note: The backend is hosted on a free tier — the first request may take ~30 seconds to cold-start.
 
@@ -328,18 +328,4 @@ src/
 
 ---
 
-## Contributing
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/your-feature`
-3. Commit your changes: `git commit -m 'feat: add your feature'`
-4. Push to the branch: `git push origin feature/your-feature`
-5. Open a Pull Request
-
-Please ensure all tests pass before submitting a PR.
-
----
-
-## License
-
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
