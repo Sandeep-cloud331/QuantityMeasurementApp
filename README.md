@@ -9,7 +9,6 @@ A production-ready REST API for performing unit conversions, comparisons, and ar
 | Service | URL |
 |---------|-----|
 | **Frontend App** | [https://quantity-measurement-app.vercel.app](https://quantity-measurement-app-frontend-one-jet.vercel.app/) |
-| **API Base URL** | [https://quantity-measurement-api.onrender.com/api/v1](https://quantitymeasurementapp-2-i500.onrender.com/api/v1) |
 | **Swagger UI** | [https://quantity-measurement-api.onrender.com/swagger-ui.html](https://quantitymeasurementapp-2-i500.onrender.com/swagger-ui/index.html) |
 | **Health Check** | [https://quantity-measurement-api.onrender.com/actuator/health](https://quantitymeasurementapp-2-i500.onrender.com/actuator/health) |
 
